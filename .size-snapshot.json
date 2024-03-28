@@ -1,8 +1,8 @@
 {
   "dist/index.js": {
-    "bundled": 57814,
-    "minified": 26079,
-    "gzipped": 6099
+    "bundled": 57567,
+    "minified": 25876,
+    "gzipped": 6020
   },
   "dist/index.es.js": {
     "bundled": 56133,

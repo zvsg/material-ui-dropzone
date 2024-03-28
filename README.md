@@ -96,7 +96,7 @@ This component provides the DropzoneArea inside of a MaterialUI Dialog.
 ```jsx static
 import React, { Component } from 'react'
 import {DropzoneDialog} from 'material-ui-dropzone'
-import Button from '@mui/material/Button';
+import Button from '@material-ui/core/Button';
 
 export default class DropzoneDialogExample extends Component {
     constructor(props) {

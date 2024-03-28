@@ -28,39 +28,13 @@ import { DropzoneAreaBase } from 'material-ui-dropzone';
 ### Custom Dropzone Icon
 
 ```jsx
-import { AttachFile } from '@mui/icons-material';
+import { AttachFile } from '@material-ui/icons';
 
 <DropzoneAreaBase
   Icon={AttachFile}
   dropzoneText={"Drag and drop an image here or click"}
   onChange={(files) => console.log('Files:', files)}
   onAlert={(message, variant) => console.log(`${variant}: ${message}`)}
-/>
-```
-
-### Reset button
-
-```jsx
-<DropzoneAreaBase
-  onAdd={(fileObjs) => console.log('Added Files:', fileObjs)}
-  onDelete={(fileObj) => console.log('Removed File:', fileObj)}
-  onAlert={(message, variant) => console.log(`${variant}: ${message}`)}
-  reset={{
-    onClick: () => console.log('reset'),
-  }}
-/>
-```
-
-### Custom reset button
-
-Allow to pass any valid DOM node valid to react to use custom reset button
-
-```jsx
-<DropzoneAreaBase
-  onAdd={(fileObjs) => console.log('Added Files:', fileObjs)}
-  onDelete={(fileObj) => console.log('Removed File:', fileObj)}
-  onAlert={(message, variant) => console.log(`${variant}: ${message}`)}
-  reset={<button style={{ margin: '20px 0' }} onClick={() => console.log('reset')}>reset</button>}
 />
 ```
 
@@ -75,7 +49,7 @@ Demonstration of how to customize the preview icon for:
 
 ```jsx
 import React, { useState } from 'react';
-import { AttachFile, AudioTrack, Description, PictureAsPdf, Theaters } from '@mui/icons-material';
+import { AttachFile, AudioTrack, Description, PictureAsPdf, Theaters } from '@material-ui/icons';
 
 const handlePreviewIcon = (fileObject, classes) => {
   const {type} = fileObject.file

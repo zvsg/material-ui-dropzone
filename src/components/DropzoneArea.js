@@ -115,7 +115,7 @@ class DropzoneArea extends React.PureComponent {
                 this.setState({
                     fileObjects: remainingFileObjs,
                 }, this.notifyFileChange);
-            }, removedFileObj.file, removedFileObjIdx);
+            }, removedFileObj.file);
         } else {
             // Calculate remaining fileObjects array
             const remainingFileObjs = fileObjects.filter((fileObject, i) => {
@@ -175,7 +175,6 @@ DropzoneArea.propTypes = {
      * Fired when a file is deleted from the previews panel.
      *
      * @param {File} deletedFile The file that was removed.
-     * @param {number} index The index of the removed file object.
      */
     onDelete: PropTypes.func,
 };
