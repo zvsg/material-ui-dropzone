@@ -103,20 +103,30 @@ class DropzoneArea extends React.PureComponent {
         const {onDelete} = this.props;
         const {fileObjects} = this.state;
 
-        // Calculate remaining fileObjects array
-        const remainingFileObjs = fileObjects.filter((fileObject, i) => {
-            return i !== removedFileObjIdx;
-        });
-
         // Notify removed file
         if (onDelete) {
-            onDelete(removedFileObj.file, removedFileObjIdx);
-        }
+            onDelete(() => {
+                // Calculate remaining fileObjects array
+                const remainingFileObjs = fileObjects.filter((fileObject, i) => {
+                    return i !== removedFileObjIdx;
+                });
 
-        // Update local state
-        this.setState({
-            fileObjects: remainingFileObjs,
-        }, this.notifyFileChange);
+                // Update local state
+                this.setState({
+                    fileObjects: remainingFileObjs,
+                }, this.notifyFileChange);
+            }, removedFileObj.file, removedFileObjIdx);
+        } else {
+            // Calculate remaining fileObjects array
+            const remainingFileObjs = fileObjects.filter((fileObject, i) => {
+                return i !== removedFileObjIdx;
+            });
+
+            // Update local state
+            this.setState({
+                fileObjects: remainingFileObjs,
+            }, this.notifyFileChange);
+        }
     }
 
     render() {

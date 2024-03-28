@@ -36,6 +36,5 @@ export default {
     }),
     resolve(),
     commonjs(),
-    sizeSnapshot(),
   ],
 };
