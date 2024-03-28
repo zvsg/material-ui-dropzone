@@ -6,14 +6,14 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var _extends = _interopDefault(require('@babel/runtime/helpers/extends'));
 var _slicedToArray = _interopDefault(require('@babel/runtime/helpers/slicedToArray'));
-var _regeneratorRuntime = _interopDefault(require('@babel/runtime/regenerator'));
 var _asyncToGenerator = _interopDefault(require('@babel/runtime/helpers/asyncToGenerator'));
 var _classCallCheck = _interopDefault(require('@babel/runtime/helpers/classCallCheck'));
 var _createClass = _interopDefault(require('@babel/runtime/helpers/createClass'));
-var _inherits = _interopDefault(require('@babel/runtime/helpers/inherits'));
 var _possibleConstructorReturn = _interopDefault(require('@babel/runtime/helpers/possibleConstructorReturn'));
 var _getPrototypeOf = _interopDefault(require('@babel/runtime/helpers/getPrototypeOf'));
+var _inherits = _interopDefault(require('@babel/runtime/helpers/inherits'));
 var _objectWithoutProperties = _interopDefault(require('@babel/runtime/helpers/objectWithoutProperties'));
+var _regeneratorRuntime = _interopDefault(require('@babel/runtime/regenerator'));
 var PropTypes = _interopDefault(require('prop-types'));
 var React = require('react');
 var Snackbar = _interopDefault(require('@mui/material/Snackbar'));
@@ -64,26 +64,24 @@ function _createFileFromUrl() {
   _createFileFromUrl = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(url) {
     var response, data, metadata, filename;
     return _regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            _context.next = 2;
-            return fetch(url);
-          case 2:
-            response = _context.sent;
-            _context.next = 5;
-            return response.blob();
-          case 5:
-            data = _context.sent;
-            metadata = {
-              type: data.type
-            };
-            filename = url.replace(/\?.+/, '').split('/').pop();
-            return _context.abrupt("return", new File([data], filename, metadata));
-          case 9:
-          case "end":
-            return _context.stop();
-        }
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          _context.next = 2;
+          return fetch(url);
+        case 2:
+          response = _context.sent;
+          _context.next = 5;
+          return response.blob();
+        case 5:
+          data = _context.sent;
+          metadata = {
+            type: data.type
+          };
+          filename = url.replace(/\?.+/, '').split('/').pop();
+          return _context.abrupt("return", new File([data], filename, metadata));
+        case 9:
+        case "end":
+          return _context.stop();
       }
     }, _callee);
   }));
@@ -94,7 +92,7 @@ function readFile(file) {
     var reader = new FileReader();
     reader.onload = function (event) {
       var _event$target;
-      resolve(event === null || event === void 0 ? void 0 : (_event$target = event.target) === null || _event$target === void 0 ? void 0 : _event$target.result);
+      resolve(event === null || event === void 0 || (_event$target = event.target) === null || _event$target === void 0 ? void 0 : _event$target.result);
     };
     reader.onerror = function (event) {
       reader.abort();
@@ -104,6 +102,7 @@ function readFile(file) {
   });
 }
 
+var _DeleteIcon;
 var styles = function styles(_ref) {
   var palette = _ref.palette,
     shape = _ref.shape,
@@ -147,7 +146,6 @@ var styles = function styles(_ref) {
     }
   };
 };
-var _ref3 = /*#__PURE__*/React.createElement(DeleteIcon, null);
 function PreviewList(_ref2) {
   var fileObjects = _ref2.fileObjects,
     handleRemove = _ref2.handleRemove,
@@ -199,7 +197,7 @@ function PreviewList(_ref2) {
       onClick: handleRemove(i),
       "aria-label": "Delete",
       className: classes.removeButton
-    }, _ref3));
+    }, _DeleteIcon || (_DeleteIcon = /*#__PURE__*/React.createElement(DeleteIcon, null))));
   }));
 }
 process.env.NODE_ENV !== "production" ? PreviewList.propTypes = {
@@ -217,6 +215,7 @@ var PreviewList$1 = styles$3.withStyles(styles, {
   name: 'MuiDropzonePreviewList'
 })(PreviewList);
 
+var _excluded = ["classes", "className", "message", "onClose", "variant"];
 var variantIcon = {
   success: CheckCircleIcon,
   warning: WarningIcon,
@@ -257,7 +256,7 @@ function SnackbarContentWrapper(props) {
     message = props.message,
     onClose = props.onClose,
     variant = props.variant,
-    other = _objectWithoutProperties(props, ["classes", "className", "message", "onClose", "variant"]);
+    other = _objectWithoutProperties(props, _excluded);
   var Icon = variantIcon[variant];
   return /*#__PURE__*/React.createElement(SnackbarContent, _extends({
     className: clsx(classes["".concat(variant, "Alert")], className),
@@ -290,7 +289,7 @@ var SnackbarContentWrapper$1 = styles$3.withStyles(styles$1, {
   name: 'MuiDropzoneSnackbar'
 })(SnackbarContentWrapper);
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
 function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
 var styles$2 = function styles(_ref) {
   var palette = _ref.palette,
@@ -369,15 +368,13 @@ var defaultGetPreviewIcon = function defaultGetPreviewIcon(fileObject, classes) 
  * This components creates a Material-UI Dropzone, with previews and snackbar notifications.
  */
 var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
-  _inherits(DropzoneAreaBase, _React$PureComponent);
-  var _super = _createSuper(DropzoneAreaBase);
   function DropzoneAreaBase() {
     var _this;
     _classCallCheck(this, DropzoneAreaBase);
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
-    _this = _super.call.apply(_super, [this].concat(args));
+    _this = _callSuper(this, DropzoneAreaBase, [].concat(args));
     _this.state = {
       openSnackBar: false,
       snackbarMessage: '',
@@ -387,74 +384,70 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(acceptedFiles, evt) {
         var _this$props, fileObjects, filesLimit, getFileAddedMessage, getFileLimitExceedMessage, onAdd, onDrop, fileObjs, message;
         return _regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _this$props = _this.props, fileObjects = _this$props.fileObjects, filesLimit = _this$props.filesLimit, getFileAddedMessage = _this$props.getFileAddedMessage, getFileLimitExceedMessage = _this$props.getFileLimitExceedMessage, onAdd = _this$props.onAdd, onDrop = _this$props.onDrop;
-                if (!(filesLimit > 1 && fileObjects.length + acceptedFiles.length > filesLimit)) {
-                  _context2.next = 4;
-                  break;
-                }
-                _this.setState({
-                  openSnackBar: true,
-                  snackbarMessage: getFileLimitExceedMessage(filesLimit),
-                  snackbarVariant: 'error'
-                }, _this.notifyAlert);
-                return _context2.abrupt("return");
-              case 4:
-                // Notify Drop event
-                if (onDrop) {
-                  onDrop(acceptedFiles, evt);
-                }
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _this$props = _this.props, fileObjects = _this$props.fileObjects, filesLimit = _this$props.filesLimit, getFileAddedMessage = _this$props.getFileAddedMessage, getFileLimitExceedMessage = _this$props.getFileLimitExceedMessage, onAdd = _this$props.onAdd, onDrop = _this$props.onDrop;
+              if (!(filesLimit > 1 && fileObjects.length + acceptedFiles.length > filesLimit)) {
+                _context2.next = 4;
+                break;
+              }
+              _this.setState({
+                openSnackBar: true,
+                snackbarMessage: getFileLimitExceedMessage(filesLimit),
+                snackbarVariant: 'error'
+              }, _this.notifyAlert);
+              return _context2.abrupt("return");
+            case 4:
+              // Notify Drop event
+              if (onDrop) {
+                onDrop(acceptedFiles, evt);
+              }
 
-                // Retrieve fileObjects data
-                _context2.next = 7;
-                return Promise.all(acceptedFiles.map( /*#__PURE__*/function () {
-                  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(file) {
-                    var data;
-                    return _regeneratorRuntime.wrap(function _callee$(_context) {
-                      while (1) {
-                        switch (_context.prev = _context.next) {
-                          case 0:
-                            _context.next = 2;
-                            return readFile(file);
-                          case 2:
-                            data = _context.sent;
-                            return _context.abrupt("return", {
-                              file: file,
-                              data: data
-                            });
-                          case 4:
-                          case "end":
-                            return _context.stop();
-                        }
-                      }
-                    }, _callee);
-                  }));
-                  return function (_x3) {
-                    return _ref3.apply(this, arguments);
-                  };
-                }()));
-              case 7:
-                fileObjs = _context2.sent;
-                // Notify added files
-                if (onAdd) {
-                  onAdd(fileObjs);
-                }
+              // Retrieve fileObjects data
+              _context2.next = 7;
+              return Promise.all(acceptedFiles.map( /*#__PURE__*/function () {
+                var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(file) {
+                  var data;
+                  return _regeneratorRuntime.wrap(function _callee$(_context) {
+                    while (1) switch (_context.prev = _context.next) {
+                      case 0:
+                        _context.next = 2;
+                        return readFile(file);
+                      case 2:
+                        data = _context.sent;
+                        return _context.abrupt("return", {
+                          file: file,
+                          data: data
+                        });
+                      case 4:
+                      case "end":
+                        return _context.stop();
+                    }
+                  }, _callee);
+                }));
+                return function (_x3) {
+                  return _ref3.apply(this, arguments);
+                };
+              }()));
+            case 7:
+              fileObjs = _context2.sent;
+              // Notify added files
+              if (onAdd) {
+                onAdd(fileObjs);
+              }
 
-                // Display message
-                message = fileObjs.reduce(function (msg, fileObj) {
-                  return msg + getFileAddedMessage(fileObj.file.name);
-                }, '');
-                _this.setState({
-                  openSnackBar: true,
-                  snackbarMessage: message,
-                  snackbarVariant: 'success'
-                }, _this.notifyAlert);
-              case 11:
-              case "end":
-                return _context2.stop();
-            }
+              // Display message
+              message = fileObjs.reduce(function (msg, fileObj) {
+                return msg + getFileAddedMessage(fileObj.file.name);
+              }, '');
+              _this.setState({
+                openSnackBar: true,
+                snackbarMessage: message,
+                snackbarVariant: 'success'
+              }, _this.notifyAlert);
+            case 11:
+            case "end":
+              return _context2.stop();
           }
         }, _callee2);
       }));
@@ -494,7 +487,9 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
         var _this$props3 = _this.props,
           fileObjects = _this$props3.fileObjects,
           getFileRemovedMessage = _this$props3.getFileRemovedMessage,
-          onDelete = _this$props3.onDelete; // Find removed fileObject
+          onDelete = _this$props3.onDelete;
+
+        // Find removed fileObject
         var removedFileObj = fileObjects[fileIndex];
 
         // Notify removed file
@@ -515,7 +510,8 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
     };
     return _this;
   }
-  _createClass(DropzoneAreaBase, [{
+  _inherits(DropzoneAreaBase, _React$PureComponent);
+  return _createClass(DropzoneAreaBase, [{
     key: "notifyAlert",
     value: function notifyAlert() {
       var onAlert = this.props.onAlert;
@@ -627,7 +623,6 @@ var DropzoneAreaBase = /*#__PURE__*/function (_React$PureComponent) {
       })));
     }
   }]);
-  return DropzoneAreaBase;
 }(React.PureComponent);
 DropzoneAreaBase.defaultProps = {
   acceptedFiles: [],
@@ -856,14 +851,15 @@ var DropzoneAreaBase$1 = styles$3.withStyles(styles$2, {
   name: 'MuiDropzoneArea'
 })(DropzoneAreaBase);
 
-function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+var _excluded$1 = ["clearOnUnmount", "initialFiles", "onChange", "onDelete"];
+function _callSuper$1(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct$1() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
 function _isNativeReflectConstruct$1() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct$1 = function _isNativeReflectConstruct() { return !!t; })(); }
 var splitDropzoneAreaProps = function splitDropzoneAreaProps(props) {
   var clearOnUnmount = props.clearOnUnmount,
     initialFiles = props.initialFiles,
     onChange = props.onChange,
     onDelete = props.onDelete,
-    dropzoneAreaProps = _objectWithoutProperties(props, ["clearOnUnmount", "initialFiles", "onChange", "onDelete"]);
+    dropzoneAreaProps = _objectWithoutProperties(props, _excluded$1);
   return [{
     clearOnUnmount: clearOnUnmount,
     initialFiles: initialFiles,
@@ -880,15 +876,13 @@ var splitDropzoneAreaProps = function splitDropzoneAreaProps(props) {
  * **Note** To listen to file changes use `onChange` event handler and notice that `onDelete` returns a `File` instance instead of `FileObject`.
  */
 var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
-  _inherits(DropzoneArea, _React$PureComponent);
-  var _super = _createSuper$1(DropzoneArea);
   function DropzoneArea() {
     var _this;
     _classCallCheck(this, DropzoneArea);
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
-    _this = _super.call.apply(_super, [this].concat(args));
+    _this = _callSuper$1(this, DropzoneArea, [].concat(args));
     _this.state = {
       fileObjects: []
     };
@@ -904,68 +898,64 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
     _this.loadInitialFiles = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2() {
       var initialFiles, fileObjs;
       return _regeneratorRuntime.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              initialFiles = _this.props.initialFiles;
-              _context2.prev = 1;
-              _context2.next = 4;
-              return Promise.all(initialFiles.map( /*#__PURE__*/function () {
-                var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(initialFile) {
-                  var file, data;
-                  return _regeneratorRuntime.wrap(function _callee$(_context) {
-                    while (1) {
-                      switch (_context.prev = _context.next) {
-                        case 0:
-                          if (!(typeof initialFile === 'string')) {
-                            _context.next = 6;
-                            break;
-                          }
-                          _context.next = 3;
-                          return createFileFromUrl(initialFile);
-                        case 3:
-                          file = _context.sent;
-                          _context.next = 7;
-                          break;
-                        case 6:
-                          file = initialFile;
-                        case 7:
-                          _context.next = 9;
-                          return readFile(file);
-                        case 9:
-                          data = _context.sent;
-                          return _context.abrupt("return", {
-                            file: file,
-                            data: data
-                          });
-                        case 11:
-                        case "end":
-                          return _context.stop();
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            initialFiles = _this.props.initialFiles;
+            _context2.prev = 1;
+            _context2.next = 4;
+            return Promise.all(initialFiles.map( /*#__PURE__*/function () {
+              var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(initialFile) {
+                var file, data;
+                return _regeneratorRuntime.wrap(function _callee$(_context) {
+                  while (1) switch (_context.prev = _context.next) {
+                    case 0:
+                      if (!(typeof initialFile === 'string')) {
+                        _context.next = 6;
+                        break;
                       }
-                    }
-                  }, _callee);
-                }));
-                return function (_x) {
-                  return _ref2.apply(this, arguments);
-                };
-              }()));
-            case 4:
-              fileObjs = _context2.sent;
-              _this.setState(function (state) {
-                return {
-                  fileObjects: [].concat(state.fileObjects, fileObjs)
-                };
-              }, _this.notifyFileChange);
-              _context2.next = 11;
-              break;
-            case 8:
-              _context2.prev = 8;
-              _context2.t0 = _context2["catch"](1);
-              console.log(_context2.t0);
-            case 11:
-            case "end":
-              return _context2.stop();
-          }
+                      _context.next = 3;
+                      return createFileFromUrl(initialFile);
+                    case 3:
+                      file = _context.sent;
+                      _context.next = 7;
+                      break;
+                    case 6:
+                      file = initialFile;
+                    case 7:
+                      _context.next = 9;
+                      return readFile(file);
+                    case 9:
+                      data = _context.sent;
+                      return _context.abrupt("return", {
+                        file: file,
+                        data: data
+                      });
+                    case 11:
+                    case "end":
+                      return _context.stop();
+                  }
+                }, _callee);
+              }));
+              return function (_x) {
+                return _ref2.apply(this, arguments);
+              };
+            }()));
+          case 4:
+            fileObjs = _context2.sent;
+            _this.setState(function (state) {
+              return {
+                fileObjects: [].concat(state.fileObjects, fileObjs)
+              };
+            }, _this.notifyFileChange);
+            _context2.next = 11;
+            break;
+          case 8:
+            _context2.prev = 8;
+            _context2.t0 = _context2["catch"](1);
+            console.log(_context2.t0);
+          case 11:
+          case "end":
+            return _context2.stop();
         }
       }, _callee2, null, [[1, 8]]);
     }));
@@ -973,27 +963,25 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3(newFileObjects) {
         var filesLimit;
         return _regeneratorRuntime.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                filesLimit = _this.props.filesLimit; // Update component state
-                _this.setState(function (state) {
-                  // Handle a single file
-                  if (filesLimit <= 1) {
-                    return {
-                      fileObjects: [].concat(newFileObjects[0])
-                    };
-                  }
-
-                  // Handle multiple files
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              filesLimit = _this.props.filesLimit; // Update component state
+              _this.setState(function (state) {
+                // Handle a single file
+                if (filesLimit <= 1) {
                   return {
-                    fileObjects: [].concat(state.fileObjects, newFileObjects)
+                    fileObjects: [].concat(newFileObjects[0])
                   };
-                }, _this.notifyFileChange);
-              case 2:
-              case "end":
-                return _context3.stop();
-            }
+                }
+
+                // Handle multiple files
+                return {
+                  fileObjects: [].concat(state.fileObjects, newFileObjects)
+                };
+              }, _this.notifyFileChange);
+            case 2:
+            case "end":
+              return _context3.stop();
           }
         }, _callee3);
       }));
@@ -1004,7 +992,9 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
     _this.deleteFile = function (removedFileObj, removedFileObjIdx) {
       event.stopPropagation();
       var onDelete = _this.props.onDelete;
-      var fileObjects = _this.state.fileObjects; // Notify removed file
+      var fileObjects = _this.state.fileObjects;
+
+      // Notify removed file
       if (onDelete) {
         onDelete(function () {
           // Calculate remaining fileObjects array
@@ -1031,7 +1021,8 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
     };
     return _this;
   }
-  _createClass(DropzoneArea, [{
+  _inherits(DropzoneArea, _React$PureComponent);
+  return _createClass(DropzoneArea, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       this.loadInitialFiles();
@@ -1060,7 +1051,6 @@ var DropzoneArea = /*#__PURE__*/function (_React$PureComponent) {
       }));
     }
   }]);
-  return DropzoneArea;
 }(React.PureComponent);
 DropzoneArea.defaultProps = {
   clearOnUnmount: true,
@@ -1091,7 +1081,8 @@ process.env.NODE_ENV !== "production" ? DropzoneArea.propTypes = _extends({}, Dr
   onDelete: PropTypes.func
 }) : void 0;
 
-function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+var _excluded$2 = ["cancelButtonText", "dialogProps", "dialogTitle", "fullWidth", "maxWidth", "onClose", "onSave", "open", "submitButtonText"];
+function _callSuper$2(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct$2() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
 function _isNativeReflectConstruct$2() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct$2 = function _isNativeReflectConstruct() { return !!t; })(); }
 
 // Split props related to DropzoneDialog from DropzoneArea ones
@@ -1105,7 +1096,7 @@ function splitDropzoneDialogProps(allProps) {
     onSave = allProps.onSave,
     open = allProps.open,
     submitButtonText = allProps.submitButtonText,
-    dropzoneAreaProps = _objectWithoutProperties(allProps, ["cancelButtonText", "dialogProps", "dialogTitle", "fullWidth", "maxWidth", "onClose", "onSave", "open", "submitButtonText"]);
+    dropzoneAreaProps = _objectWithoutProperties(allProps, _excluded$2);
   return [{
     cancelButtonText: cancelButtonText,
     dialogProps: dialogProps,
@@ -1125,13 +1116,12 @@ function splitDropzoneDialogProps(allProps) {
  * It supports all the Props and Methods from `DropzoneAreaBase`.
  */
 var DropzoneDialogBase = /*#__PURE__*/function (_React$PureComponent) {
-  _inherits(DropzoneDialogBase, _React$PureComponent);
-  var _super = _createSuper$2(DropzoneDialogBase);
   function DropzoneDialogBase() {
     _classCallCheck(this, DropzoneDialogBase);
-    return _super.apply(this, arguments);
+    return _callSuper$2(this, DropzoneDialogBase, arguments);
   }
-  _createClass(DropzoneDialogBase, [{
+  _inherits(DropzoneDialogBase, _React$PureComponent);
+  return _createClass(DropzoneDialogBase, [{
     key: "render",
     value: function render() {
       var _splitDropzoneDialogP = splitDropzoneDialogProps(this.props),
@@ -1146,7 +1136,9 @@ var DropzoneDialogBase = /*#__PURE__*/function (_React$PureComponent) {
         onClose = dropzoneDialogProps.onClose,
         onSave = dropzoneDialogProps.onSave,
         open = dropzoneDialogProps.open,
-        submitButtonText = dropzoneDialogProps.submitButtonText; // Submit button state
+        submitButtonText = dropzoneDialogProps.submitButtonText;
+
+      // Submit button state
       var submitDisabled = dropzoneAreaProps.fileObjects.length === 0;
       return /*#__PURE__*/React.createElement(Dialog, _extends({}, dialogProps, {
         fullWidth: fullWidth,
@@ -1163,7 +1155,6 @@ var DropzoneDialogBase = /*#__PURE__*/function (_React$PureComponent) {
       }, submitButtonText)));
     }
   }]);
-  return DropzoneDialogBase;
 }(React.PureComponent);
 DropzoneDialogBase.defaultProps = {
   open: false,
@@ -1224,7 +1215,7 @@ process.env.NODE_ENV !== "production" ? DropzoneDialogBase.propTypes = _extends(
   showFileNamesInPreview: PropTypes.bool
 }) : void 0;
 
-function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _callSuper$3(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct$3() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
 function _isNativeReflectConstruct$3() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct$3 = function _isNativeReflectConstruct() { return !!t; })(); }
 
 /**
@@ -1235,15 +1226,13 @@ function _isNativeReflectConstruct$3() { try { var t = !Boolean.prototype.valueO
  * **Note** The `onSave` handler also returns `File[]` with all the accepted files.
  */
 var DropzoneDialog = /*#__PURE__*/function (_React$PureComponent) {
-  _inherits(DropzoneDialog, _React$PureComponent);
-  var _super = _createSuper$3(DropzoneDialog);
   function DropzoneDialog() {
     var _this;
     _classCallCheck(this, DropzoneDialog);
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
-    _this = _super.call.apply(_super, [this].concat(args));
+    _this = _callSuper$3(this, DropzoneDialog, [].concat(args));
     _this.state = {
       fileObjects: []
     };
@@ -1259,68 +1248,64 @@ var DropzoneDialog = /*#__PURE__*/function (_React$PureComponent) {
     _this.loadInitialFiles = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2() {
       var initialFiles, fileObjs;
       return _regeneratorRuntime.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              initialFiles = _this.props.initialFiles;
-              _context2.prev = 1;
-              _context2.next = 4;
-              return Promise.all(initialFiles.map( /*#__PURE__*/function () {
-                var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(initialFile) {
-                  var file, data;
-                  return _regeneratorRuntime.wrap(function _callee$(_context) {
-                    while (1) {
-                      switch (_context.prev = _context.next) {
-                        case 0:
-                          if (!(typeof initialFile === 'string')) {
-                            _context.next = 6;
-                            break;
-                          }
-                          _context.next = 3;
-                          return createFileFromUrl(initialFile);
-                        case 3:
-                          file = _context.sent;
-                          _context.next = 7;
-                          break;
-                        case 6:
-                          file = initialFile;
-                        case 7:
-                          _context.next = 9;
-                          return readFile(file);
-                        case 9:
-                          data = _context.sent;
-                          return _context.abrupt("return", {
-                            file: file,
-                            data: data
-                          });
-                        case 11:
-                        case "end":
-                          return _context.stop();
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            initialFiles = _this.props.initialFiles;
+            _context2.prev = 1;
+            _context2.next = 4;
+            return Promise.all(initialFiles.map( /*#__PURE__*/function () {
+              var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(initialFile) {
+                var file, data;
+                return _regeneratorRuntime.wrap(function _callee$(_context) {
+                  while (1) switch (_context.prev = _context.next) {
+                    case 0:
+                      if (!(typeof initialFile === 'string')) {
+                        _context.next = 6;
+                        break;
                       }
-                    }
-                  }, _callee);
-                }));
-                return function (_x) {
-                  return _ref2.apply(this, arguments);
-                };
-              }()));
-            case 4:
-              fileObjs = _context2.sent;
-              _this.setState(function (state) {
-                return {
-                  fileObjects: [].concat(state.fileObjects, fileObjs)
-                };
-              }, _this.notifyFileChange);
-              _context2.next = 11;
-              break;
-            case 8:
-              _context2.prev = 8;
-              _context2.t0 = _context2["catch"](1);
-              console.log(_context2.t0);
-            case 11:
-            case "end":
-              return _context2.stop();
-          }
+                      _context.next = 3;
+                      return createFileFromUrl(initialFile);
+                    case 3:
+                      file = _context.sent;
+                      _context.next = 7;
+                      break;
+                    case 6:
+                      file = initialFile;
+                    case 7:
+                      _context.next = 9;
+                      return readFile(file);
+                    case 9:
+                      data = _context.sent;
+                      return _context.abrupt("return", {
+                        file: file,
+                        data: data
+                      });
+                    case 11:
+                    case "end":
+                      return _context.stop();
+                  }
+                }, _callee);
+              }));
+              return function (_x) {
+                return _ref2.apply(this, arguments);
+              };
+            }()));
+          case 4:
+            fileObjs = _context2.sent;
+            _this.setState(function (state) {
+              return {
+                fileObjects: [].concat(state.fileObjects, fileObjs)
+              };
+            }, _this.notifyFileChange);
+            _context2.next = 11;
+            break;
+          case 8:
+            _context2.prev = 8;
+            _context2.t0 = _context2["catch"](1);
+            console.log(_context2.t0);
+          case 11:
+          case "end":
+            return _context2.stop();
         }
       }, _callee2, null, [[1, 8]]);
     }));
@@ -1328,27 +1313,25 @@ var DropzoneDialog = /*#__PURE__*/function (_React$PureComponent) {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3(newFileObjects) {
         var filesLimit;
         return _regeneratorRuntime.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                filesLimit = _this.props.filesLimit; // Update component state
-                _this.setState(function (state) {
-                  // Handle a single file
-                  if (filesLimit <= 1) {
-                    return {
-                      fileObjects: [].concat(newFileObjects[0])
-                    };
-                  }
-
-                  // Handle multiple files
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              filesLimit = _this.props.filesLimit; // Update component state
+              _this.setState(function (state) {
+                // Handle a single file
+                if (filesLimit <= 1) {
                   return {
-                    fileObjects: [].concat(state.fileObjects, newFileObjects)
+                    fileObjects: [].concat(newFileObjects[0])
                   };
-                }, _this.notifyFileChange);
-              case 2:
-              case "end":
-                return _context3.stop();
-            }
+                }
+
+                // Handle multiple files
+                return {
+                  fileObjects: [].concat(state.fileObjects, newFileObjects)
+                };
+              }, _this.notifyFileChange);
+            case 2:
+            case "end":
+              return _context3.stop();
           }
         }, _callee3);
       }));
@@ -1359,7 +1342,9 @@ var DropzoneDialog = /*#__PURE__*/function (_React$PureComponent) {
     _this.deleteFile = function (removedFileObj, removedFileObjIdx) {
       event.stopPropagation();
       var onDelete = _this.props.onDelete;
-      var fileObjects = _this.state.fileObjects; // Calculate remaining fileObjects array
+      var fileObjects = _this.state.fileObjects;
+
+      // Calculate remaining fileObjects array
       var remainingFileObjs = fileObjects.filter(function (fileObject, i) {
         return i !== removedFileObjIdx;
       });
@@ -1405,7 +1390,8 @@ var DropzoneDialog = /*#__PURE__*/function (_React$PureComponent) {
     };
     return _this;
   }
-  _createClass(DropzoneDialog, [{
+  _inherits(DropzoneDialog, _React$PureComponent);
+  return _createClass(DropzoneDialog, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       this.loadInitialFiles();
@@ -1433,7 +1419,6 @@ var DropzoneDialog = /*#__PURE__*/function (_React$PureComponent) {
       }));
     }
   }]);
-  return DropzoneDialog;
 }(React.PureComponent);
 DropzoneDialog.defaultProps = {
   clearOnUnmount: true,
